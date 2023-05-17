@@ -14,7 +14,7 @@ var inventory;
       this.template = inventoryItem.innerHTML;
       inventoryItem.remove();
       // var $iTmpl = $("#inventory_item").remove();
-      // this.template = $iTmpl.html();
+      // this.template = $iTmpl.html(); 
     },
     add: function() {
       this.lastId++;
@@ -55,10 +55,16 @@ var inventory;
     },
     newItem: function(e) {
       e.preventDefault();
-      var item = this.add(),
-          $item = $(this.template.replace(/ID/g, item.id));
+      let item = this.add();
+      let itemTemplate = this.template.replace(/ID/g, item.id);
+      let itemNode = document.createElement('tbody');
+      itemNode.innerHTML = itemTemplate;
+      document.querySelector("#inventory").appendChild(itemNode);
+      
+      // var item = this.add(),
+      //     $item = $(this.template.replace(/ID/g, item.id));
 
-      $("#inventory").append($item);
+      // $("#inventory").append($item);
     },
     findParent: function(e) {
       return $(e.target).closest("tr");
@@ -116,11 +122,12 @@ $($.proxy(inventory.init, inventory));
               x.innerHTML =  template
               whatever.appendChild(x)
 
+  
 
   $item: change functions on lines: 56, 59, 65, 69, 74
   56 
           itemTemplate = document.createElement('script');
           itemTemplate.innerText = this.template.replace(/ID/g, item.id);
 
-      document.querySelector("#inventory").appendChild(itemTemplate);
+  
  */
