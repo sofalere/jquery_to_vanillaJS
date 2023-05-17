@@ -9,9 +9,8 @@ let inventory;
       document.querySelector("#order_date").innerText = date.toUTCString();
     },
     cacheTemplate: function() {
-      let inventoryItem = document.querySelector("#inventory_item");
-      this.template = inventoryItem.innerHTML;
-      inventoryItem.remove();
+      let inventoryItem = document.querySelector("#inventory_item").innerHTML;
+      this.template = Handlebars.compile(inventoryItem);
     },
     add: function() {
       this.lastId++;
@@ -53,7 +52,7 @@ let inventory;
     newItem: function(e) {
       e.preventDefault();
       let item = this.add();
-      let itemTemplate = this.template.replace(/ID/g, item.id);
+      let itemTemplate = this.template({ID: item.id});
       let itemNode = document.createElement('tbody');
       itemNode.innerHTML = itemTemplate;
       document.querySelector("#inventory").appendChild(itemNode);
