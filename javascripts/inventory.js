@@ -6,11 +6,15 @@ var inventory;
     collection: [],
     setDate: function() {
       var date = new Date();
-      $("#order_date").text(date.toUTCString());
+      document.querySelector("#order_date").innerText = date.toUTCString();
+      // $("#order_date").text(date.toUTCString());
     },
     cacheTemplate: function() {
-      var $iTmpl = $("#inventory_item").remove();
-      this.template = $iTmpl.html();
+      let inventoryItem = document.querySelector("#inventory_item");
+      this.template = inventoryItem.innerHTML;
+      inventoryItem.remove();
+      // var $iTmpl = $("#inventory_item").remove();
+      // this.template = $iTmpl.html();
     },
     add: function() {
       this.lastId++;
@@ -87,3 +91,36 @@ var inventory;
 })();
 
 $($.proxy(inventory.init, inventory));
+
+/*
+- remove jquery function 
+  - initialize inventory ibject after DOM content loads
+
+   proxy is similar to bind and we are passing in the `inventory.init` function with the context of inventory to jqueyr
+ 
+- query selectors:
+  lines 9, 62, all `bind events`
+
+- $iTmpl: l
+  cacheTemplate line 13 
+  - removing the element `#inventory-item`
+  - assigning the `template` variable the removed elements inner  HTML 
+    - jquery html() === innerHTML
+  newItem line 53
+  - assigns $item var to jquery version of string `template` with new ids
+  - new template value does not interfere
+
+- $item
+  newItem 13
+  - append === createElement(x)
+              x.innerHTML =  template
+              whatever.appendChild(x)
+
+
+  $item: change functions on lines: 56, 59, 65, 69, 74
+  56 
+          itemTemplate = document.createElement('script');
+          itemTemplate.innerText = this.template.replace(/ID/g, item.id);
+
+      document.querySelector("#inventory").appendChild(itemTemplate);
+ */
