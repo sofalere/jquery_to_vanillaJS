@@ -1,4 +1,4 @@
-var inventory;
+let inventory;
 
 (function() {
   inventory = {
@@ -80,12 +80,11 @@ var inventory;
       document.querySelector("#add_item").addEventListener("click", this.newItem.bind(this));
       
       document.querySelector("#inventory").addEventListener("click", e => {
-        [...e.currentTarget.querySelectorAll('a delete')].forEach( input => {
+        [...e.currentTarget.querySelectorAll('a.delete')].forEach( input => {
           input.addEventListener('click', this.deleteItem.bind(this));
         })
       })
-      $("#inventory").on("click", "a.delete", $.proxy(this.deleteItem, this));
-      
+
       document.querySelector("#inventory").addEventListener("focusout", e => { 
         [...e.currentTarget.querySelectorAll('input')].forEach( input => {
           input.addEventListener('focusout', this.updateItem.bind(this));
@@ -100,41 +99,6 @@ var inventory;
   };
 })();
 
-
-// document.addEventListener("DOMContentLoaded", e => {
-$($.proxy(inventory.init, inventory));
-// });
-
-/*
-- remove jquery function 
-  - initialize inventory ibject after DOM content loads
-
-   proxy is similar to bind and we are passing in the `inventory.init` function with the context of inventory to jqueyr
- 
-- query selectors:
-  lines 9, 62, all `bind events`
-
-- $iTmpl: l
-  cacheTemplate line 13 
-  - removing the element `#inventory-item`
-  - assigning the `template` variable the removed elements inner  HTML 
-    - jquery html() === innerHTML
-  newItem line 53
-  - assigns $item var to jquery version of string `template` with new ids
-  - new template value does not interfere
-
-- $item
-  newItem 13
-  - append === createElement(x)
-              x.innerHTML =  template
-              whatever.appendChild(x)
-
-  
-
-  $item: change functions on lines: 56, 59, 65, 69, 74
-  56 
-          itemTemplate = document.createElement('script');
-          itemTemplate.innerText = this.template.replace(/ID/g, item.id);
-
-  
- */
+document.addEventListener("DOMContentLoaded", e => {
+  inventory.init.call(inventory);
+})
